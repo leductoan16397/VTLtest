@@ -18,4 +18,17 @@ categoryCtrl.fillter = async () => {
 
 }
 
+categoryCtrl.getAllCategory = async () => {
+    return CategoryModel.find()
+}
+
+categoryCtrl.updateCategory = async (categoryId, category) => {
+    return CategoryModel.findByIdAndUpdate({ categoryId }, category)
+}
+
+categoryCtrl.getCategoryIdByName = async (name) => {
+    return CategoryModel.findOne({ name }).categoryId
+}
+
+
 export default categoryCtrl

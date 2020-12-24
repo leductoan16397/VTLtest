@@ -3,8 +3,13 @@ import autoIncrement from 'mongoose-auto-increment'
 
 const { Schema } = mongoose
 
+const validateEmail = (email) => {
+    let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email)
+};
+
 const UserSchema = Schema({
-    userId: { type: Number, unique: true, min: 1 },
+    userId: { type: Number, unique: true, min: 1, immutable: true },
     name: { type: String, required: true },
     email: {
         type: String,
@@ -41,10 +46,7 @@ const UserSchema = Schema({
     }]
 }, { timestamps: true })
 
-const validateEmail = (email) => {
-    let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
-};
+autoIncrement.initialize(mongoose.connection);
 
 UserSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'userId', startAt: 1, incrementBy: 1 })
 

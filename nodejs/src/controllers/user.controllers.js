@@ -15,6 +15,14 @@ userCtrl.findByUserId = async (userId) => {
     return UserModel.findOne({ userId })
 }
 
+userCtrl.getAllUser = async () => {
+    return UserModel.find()
+}
+
+userCtrl.updateUser = async (userId, user) => {
+    return UserModel.findOneAndUpdate({ userId }, user)
+}
+
 userCtrl.fillter = async () => {
 
 }

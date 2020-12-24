@@ -1,21 +1,23 @@
 import express from 'express'
 import { isAuth } from '../../middleware/auth.middleware'
+import userCtrl from '../../controllers/user.controllers'
 
 const router = express.Router()
 
 router.route('/')
     .get(async (req, res) => {
         try {
-            console.log(req);
-            res.json({ mes: "user get" })
+            const listUser = await userCtrl.getAllUser()
+            res.json(listUser)
         } catch (error) {
             res.status(500).json({ error })
         }
     })
     .post(async (req, res) => {
+        const user = req.body
         try {
-            console.log(req);
-            res.json({ mes: "user post" })
+            const newUser = await userCtrl.addUser(user)
+            res.json(newUser)
         } catch (error) {
             res.status(500).json({ error })
         }
@@ -24,27 +26,28 @@ router.route('/')
 router.route('/:userId')
     .get(isAuth, async (req, res) => {
         try {
-            console.log(req);
-
-            res.json({ mes: `user id get ${req.params.userId}` })
-
+            const userId = req.params.userId
+            const user = await userCtrl.findByUserId(userId)
+            res.json(user)
         } catch (error) {
             res.status(500).json({ error })
         }
     })
     .put(async (req, res) => {
+        const user = req.body,
+            userId = req.params.userId
         try {
-            console.log(req);
-            res.json({ mes: "userdi put" })
+            const newUser = await userCtrl.updateUser(userId, user)
+            res.json(newUser)
         } catch (error) {
             res.status(500).json({ error })
         }
     })
     .delete(async (req, res) => {
+        const userId = req.params.userId
         try {
-            console.log(req);
-            res.json({ mes: "userid del" })
-
+            const del = await userCtrl.deleteUser(userId)
+            res.json(del)
         } catch (error) {
             res.status(500).json({ error })
         }

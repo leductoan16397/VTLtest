@@ -2,7 +2,7 @@ import token from './jwt.middleware'
 
 export const isAuth = async (req, res, next) => {
     const tokenFromClient = req.body.token || req.query.token || req.headers["x-access-token"],
-        accessTokenSecret = process.env.SECRET_KEY
+        accessTokenSecret = process.env.SECRET_KEY || "toanleduc"
     if (tokenFromClient) {
         try {
             const decoded = await token.verifyToken(tokenFromClient, accessTokenSecret);

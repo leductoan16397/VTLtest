@@ -1,8 +1,10 @@
 import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
 
 const { Schema } = mongoose
 
 const UserSchema = Schema({
+    userId: { type: Number, unique: true, min: 1 },
     name: { type: String, required: true },
     email: {
         type: String,
@@ -44,6 +46,7 @@ const validateEmail = (email) => {
     return re.test(email)
 };
 
+UserSchema.plugin(autoIncrement.plugin, { model: 'User', field: 'userId', startAt: 1, incrementBy: 1 })
 
 const UserModel = mongoose.model("User", UserSchema, "user")
 

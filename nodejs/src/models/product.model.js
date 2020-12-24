@@ -1,8 +1,10 @@
 import mongoose from 'mongoose'
+import autoIncrement from 'mongoose-auto-increment'
 
 const { Schema } = mongoose
 
 const ProductSchema = Schema({
+    productId: { type: Number, unique: true, min: 1 },
     name: { type: String, required: true },
     image: { type: String },
     description: { type: String },
@@ -18,9 +20,12 @@ const ProductSchema = Schema({
         endData: { type: Date, required: true, min: '2000-1-1' },
         discount: { type: Number, default: 0, min: 0, max: 100 }
     }],
-    category: { type: Schema.Types.ObjectId, ref: 'Category' },
-    producer: { type: Schema.Types.ObjectId, ref: 'Producer' }
+    category: { type: Number, ref: 'Category' },
+    producer: { type: Number, ref: 'Producer' }
 }, { timestamps: true })
+
+ProductSchema.plugin(autoIncrement.plugin, { model: 'Product', field: 'productId', startAt: 1, incrementBy: 1 })
+
 
 const ProductModel = mongoose.model("Product", ProductSchema, "product")
 

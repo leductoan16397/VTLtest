@@ -29,22 +29,13 @@ app.use(helmet())
 app.use(isProd ? morgan('combined', { stream: accessLogStream }) : morgan('dev'))
 app.use(cors())
 app.use(express.json())
+
+// Router configurations
 routes(app)
 
 app.get('/', async (req, res) => {
-    console.log(' acac zxs');
-    console.log('câcc');
-    console.log('cá');
-    res.json({ message: "hello asdd  Toan" });
-
-
+    res.json({ message: "hello Toan" });
 })
-
-// app.get('*', async (req, res) => {
-//     res.json({ message: "hel lo" });
-
-// })
-
 
 app.listen(PORT)
 console.log(`listen on  port :${PORT}`);

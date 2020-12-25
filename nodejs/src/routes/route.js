@@ -15,6 +15,6 @@ const routes = (app) => {
     app.use('/v1/categories', categoryV1);
     app.use('/v1/producers', producerV1);
     app.use('/v1/products', productV1);
-    app.use('/language', language);
+    app.use('/', language);
 }
 export default routes

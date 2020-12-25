@@ -1498,12 +1498,38 @@ const productData = [
     }
 ]
 
+const languageData = [
+    {
+        "name": "en",
+        "nation": "English",
+        "dictionary": {
+            "Name": "Name",
+            "Age": "Age",
+            "Address": "Address",
+            "Nationality": "Nationality",
+            "University": "University"
+        }
+    },
+    {
+        "name": "vi",
+        "nation": "Tiếng Việt",
+        "dictionary": {
+            "Name": "Tên",
+            "Age": "Tuổi",
+            "Address": "Địa Chỉ",
+            "Nationality": "Quốc Tịch",
+            "University": "Trường đại học"
+        }
+    }
+]
+
 import mongoose from 'mongoose'
 import UserModel from '../src/models/user.model'
 import RankModel from '../src/models/rank.model'
 import CategoryModel from '../src/models/category.model'
 import ProducerModel from '../src/models/producer.model'
 import ProductModel from '../src/models/product.model'
+import LanguageModel from '../src/models/language.model'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -1519,7 +1545,7 @@ const mongoDbUrl = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT
         // pass: 'myPassword',
     }
 
-const installDatabase = async (userDatas, categoryDatas, rankDatas, producerDatas, productDatas) => {
+const installDatabase = async (userDatas, categoryDatas, rankDatas, producerDatas, productDatas, languageData) => {
 
     console.log(`connecting to ${mongoDbUrl}`);
     mongoose.Promise = global.Promise
@@ -1545,6 +1571,11 @@ const installDatabase = async (userDatas, categoryDatas, rankDatas, producerData
             const newRank = new RankModel(element)
             return newRank.save()
         })))
+
+        arrPromise.push(languageData.forEach(element => {
+            const newLanguage = new LanguageModel(element)
+            return newLanguage.save()
+        }))
 
         await Promise.all(arrPromise)
 
@@ -1586,4 +1617,4 @@ const installDatabase = async (userDatas, categoryDatas, rankDatas, producerData
     }
 }
 
-installDatabase(userData, categoryData, rankData, producerData, productData)
+installDatabase(userData, categoryData, rankData, producerData, productData, languageData)

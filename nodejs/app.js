@@ -10,6 +10,7 @@ import connectDatabase from './configs/db.config.js'
 import routes from './src/routes/route.js';
 import i18n from 'i18n'
 import cookieParser from 'cookie-parser'
+import languageCtrl from './src/controllers/language.controllers'
 dotenv.config()
 
 connectDatabase()
@@ -18,7 +19,6 @@ const PORT = process.env.PORT || 5000;
 const isProd = process.env.NODE_ENV === "production"
 console.log(isProd);
 const app = express();
-
 const accessLogStream = createStream("access.log", {
     interval: '1d',
     path: path.join(__dirname, "log")
@@ -36,21 +36,24 @@ app.set('views', './views');
 app.use(i18n.init);
 app.use(cookieParser());
 
-i18n.configure({
-    locales: ['en', 'vi'],
-    defaultLocale: 'en',
-    directory: path.join(__dirname, 'locales'),
-    cookie: 'locale',
-    queryParameter: 'lang',
-});
+languageCtrl.getListName(__dirname).then(listEn => {
+    console.log(listEn);
+    i18n.configure({
+        locales: listEn,
+        defaultLocale: 'vi',
+        directory: path.join(__dirname, 'locales'),
+        cookie: 'lang',
+    });
+})
+
 
 
 // Router configurations
 routes(app)
 
-app.get('/', async (req, res) => {
-    res.json({ message: "hello Toan" });
-})
+// app.get('/', async (req, res) => {
+//     res.json({ message: "hello Toan" });
+// })
 
 app.listen(PORT)
 console.log(`listen on  port :${PORT}`);

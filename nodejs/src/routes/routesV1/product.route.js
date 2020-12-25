@@ -9,15 +9,11 @@ router.route('/')
         const option = {}, math = {}, sort = {}
 
         if (req.query.limit) {
-            option = {
-                limit: req.query.limit,
-                skip: req.query.limit * req.query.page || 0
-            }
+            option.limit = parseInt(req.query.limit)
+            option.skip = req.query.limit * req.query.page || 0
         }
 
-        if (req.query.sortBy && req.query.OrderBy) {
-            sort[req.query.sortBy ? req.query.sortBy : 'createAt'] = req.query.OrderBy === 'desc' ? -1 : 1
-        }
+        sort[req.query.sortBy ? req.query.sortBy : 'createAt'] = req.query.OrderBy === 'desc' ? -1 : 1
 
         if (req.query.category) {
             const categoryId = await categoryCtrl.getCategoryIdByName(req.query.category)
@@ -33,6 +29,7 @@ router.route('/')
             const listProduct = await productCtrl.getProductByApiQuery(math, option, sort)
             res.json(listProduct)
         } catch (error) {
+            console.log(error);
             res.status(500).json({ error })
         }
     })

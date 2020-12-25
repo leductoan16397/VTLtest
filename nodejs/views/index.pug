@@ -1,0 +1,21 @@
+doctype html  
+html  
+    head
+        title Pug is awesome
+    body
+        h1 Multilingual Exemple
+        div.container
+            h5 #{__('Name')} : Le Duc Toan 
+            h5 #{__('Age')} : 23
+            h5 #{__('Address')} : 528 huynh tan phat
+            h5 #{__('Nationality')} : Viet Nam
+            h5 #{__('University')} : HCMUTE
+
+
+a(href='/language/change-lang/en') English 
+br
+a(href='/language/change-lang/vi') Tiếng Việt
+
+//- ul
+//-   each val in [1, 2, 3, 4, 5]
+//-     li= val

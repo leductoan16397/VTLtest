@@ -20,7 +20,7 @@ userCtrl.getAllUser = async () => {
 }
 
 userCtrl.updateUser = async (userId, user) => {
-    return UserModel.findOneAndUpdate({ userId }, user)
+    return UserModel.findOneAndUpdate({ userId }, user, { new: true })
 }
 
 userCtrl.fillter = async () => {

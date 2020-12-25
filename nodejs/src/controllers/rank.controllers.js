@@ -1,4 +1,5 @@
 import RankModel from '../models/rank.model'
+
 const rankCtrl = {}
 
 rankCtrl.getAllRank = async () => {
@@ -11,7 +12,7 @@ rankCtrl.addRank = async (rank) => {
 }
 
 rankCtrl.updateRank = async (rankId, rank) => {
-    return RankModel.findByIdAndUpdate({ rankId }, rank)
+    return RankModel.findOneAndUpdate({ rankId }, rank, { new: true })
 }
 
 rankCtrl.deleteRank = async (rankId) => {

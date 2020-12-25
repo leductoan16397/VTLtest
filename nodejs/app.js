@@ -6,11 +6,13 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import { createStream } from 'rotating-file-stream'
 import dotenv from 'dotenv'
-// import connectDatabase from './configs/db.config.js'
+import connectDatabase from './configs/db.config.js'
 import routes from './src/routes/route.js';
+import i18n from 'i18n'
+import cookieParser from 'cookie-parser'
 dotenv.config()
 
-// connectDatabase()
+connectDatabase()
 
 const PORT = process.env.PORT || 5000;
 const isProd = process.env.NODE_ENV === "production"
@@ -29,6 +31,19 @@ app.use(helmet())
 app.use(isProd ? morgan('combined', { stream: accessLogStream }) : morgan('dev'))
 app.use(cors())
 app.use(express.json())
+app.set('view engine', 'pug');
+app.set('views', './views');
+app.use(i18n.init);
+app.use(cookieParser());
+
+i18n.configure({
+    locales: ['en', 'vi'],
+    defaultLocale: 'en',
+    directory: path.join(__dirname, 'locales'),
+    cookie: 'locale',
+    queryParameter: 'lang',
+});
+
 
 // Router configurations
 routes(app)

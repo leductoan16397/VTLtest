@@ -4,7 +4,7 @@ import autoIncrement from 'mongoose-auto-increment'
 const { Schema } = mongoose
 
 const ProductSchema = Schema({
-    productId: { type: Number, unique: true, min: 1 , immutable: true },
+    productId: { type: Number, unique: true, min: 1, immutable: true },
     name: { type: String, required: true },
     image: { type: String },
     description: { type: String },
@@ -20,8 +20,8 @@ const ProductSchema = Schema({
         endData: { type: Date, required: true, min: '2000-1-1' },
         discount: { type: Number, default: 0, min: 0, max: 100 }
     }],
-    category: { type: Number, ref: 'Category' },
-    producer: { type: Number, ref: 'Producer' }
+    category: { type: Schema.Types.ObjectId, ref: 'Category' },
+    producer: { type: Schema.Types.ObjectId, ref: 'Producer' }
 }, { timestamps: true })
 
 autoIncrement.initialize(mongoose.connection);

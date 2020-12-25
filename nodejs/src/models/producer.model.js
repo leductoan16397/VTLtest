@@ -5,7 +5,7 @@ const { Schema } = mongoose
 
 const ProducerSchemma = Schema({
     producerId: { type: Number, unique: true, min: 1, immutable: true },
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true, trim: true },
     nation: String,
     description: String
 }, { timestamps: true })

@@ -6,8 +6,13 @@ productCtrl.getAllProduct = async () => {
     return ProducerModel.find()
 }
 
-productCtrl.getProductByApiQuery = async () => {
-
+productCtrl.getProductByApiQuery = async (math, option, sort) => {
+    return ProductModel.find(math)
+        .populate('category')
+        .populate('producer')
+        .sort(sort)
+        .limit(option.limit)
+        .skip(option.skip)
 }
 productCtrl.addProduct = async (product) => {
     const newProduct = new ProductModel(product)
@@ -15,7 +20,7 @@ productCtrl.addProduct = async (product) => {
 }
 
 productCtrl.updateProduct = async (productId, product) => {
-    return ProducerModel.findOneAndUpdate({ productId }, product)
+    return ProducerModel.findOneAndUpdate({ productId }, product, { new: true })
 }
 
 productCtrl.deleteProduct = async (productId) => {

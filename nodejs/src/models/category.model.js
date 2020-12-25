@@ -5,7 +5,7 @@ const { Schema } = mongoose
 
 const CategorySchemma = Schema({
     categoryId: { type: Number, unique: true, min: 1, immutable: true },
-    name: { type: String, required: true },
+    name: { type: String, required: true, trim: true, unique: true },
     description: String
 }, { timestamps: true })
 

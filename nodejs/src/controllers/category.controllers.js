@@ -23,11 +23,12 @@ categoryCtrl.getAllCategory = async () => {
 }
 
 categoryCtrl.updateCategory = async (categoryId, category) => {
-    return CategoryModel.findByIdAndUpdate({ categoryId }, category)
+    return CategoryModel.findByIdAndUpdate({ categoryId }, category, { new: true })
 }
 
 categoryCtrl.getCategoryIdByName = async (name) => {
-    return CategoryModel.findOne({ name }).categoryId
+    const category = await CategoryModel.findOne({ name })
+    return category._id
 }
 
 

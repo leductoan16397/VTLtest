@@ -11,7 +11,7 @@ producerCtrl.addProducer = async (producer) => {
 }
 
 producerCtrl.updateProducer = async (producerId, producer) => {
-    return ProducerModel.findOneAndUpdate({ producerId }, producer)
+    return ProducerModel.findOneAndUpdate({ producerId }, producer, { new: true })
 }
 
 producerCtrl.deleteProducer = async (producerId) => {
@@ -23,10 +23,8 @@ producerCtrl.findByProducerId = async (producerId) => {
 }
 
 producerCtrl.getProducerIdByName = async (name) => {
-    return ProducerModel.findOne({ name }).producerId
+    const producer = await ProducerModel.findOne({ name })
+    return producer._id
 }
 
-producerCtrl.getProducerIdByName = async (name) => {
-    return ProducerModel.findOne({ name }).producerId
-}
 export default producerCtrl

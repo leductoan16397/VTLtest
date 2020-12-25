@@ -47,15 +47,14 @@ router.route('/languages')
         }
     })
 
-router.route('languages/:languageId')
+router.route('/languages/:languageId')
     .get(async (req, res) => {
         try {
             const languageId = req.params.languageId
             const language = await languageCtrl.findByLanguageId(languageId)
             res.json(language)
-
         } catch (error) {
-            res.status(500).json({ error })
+            res.status(500).json({ error: error })
         }
     })
     .put(async (req, res) => {

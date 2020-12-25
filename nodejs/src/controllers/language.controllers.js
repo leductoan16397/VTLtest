@@ -32,7 +32,7 @@ languageCtrl.deleteLanguage = async (languageId) => {
     return LanguageModel.deleteOne({ languageId })
 }
 
-languageCtrl.findByCategoryId = async (languageId) => {
+languageCtrl.findByLanguageId = async (languageId) => {
     return LanguageModel.findOne({ languageId })
 }
 

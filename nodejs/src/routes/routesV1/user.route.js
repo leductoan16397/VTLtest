@@ -1,5 +1,4 @@
 import express from 'express'
-import { isAuth } from '../../middleware/auth.middleware'
 import userCtrl from '../../controllers/user.controllers'
 
 const router = express.Router()
@@ -24,7 +23,7 @@ router.route('/')
     })
 
 router.route('/:userId')
-    .get(isAuth, async (req, res) => {
+    .get( async (req, res) => {
         try {
             const userId = req.params.userId
             const user = await userCtrl.findByUserId(userId)
